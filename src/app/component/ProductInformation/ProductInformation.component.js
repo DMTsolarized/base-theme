@@ -9,41 +9,36 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import PropTypes from 'prop-types';
-import { Fragment, PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { Fragment, PureComponent } from "react";
 
-import ContentWrapper from 'Component/ContentWrapper';
-import ExpandableContent from 'Component/ExpandableContent';
-import Html from 'Component/Html';
-import ProductAttributeValue from 'Component/ProductAttributeValue';
-import { AttributeType, ProductType } from 'Type/ProductList';
+import ContentWrapper from "Component/ContentWrapper";
+import ExpandableContent from "Component/ExpandableContent";
+import Html from "Component/Html";
+import ProductAttributeValue from "Component/ProductAttributeValue";
+import { AttributeType, ProductType } from "Type/ProductList";
 
-import './ProductInformation.style';
+import "./ProductInformation.style";
 
 /** @namespace Component/ProductInformation/Component */
 export class ProductInformation extends PureComponent {
     static propTypes = {
         product: ProductType.isRequired,
         areDetailsLoaded: PropTypes.bool.isRequired,
-        attributesWithValues: AttributeType.isRequired
+        attributesWithValues: AttributeType.isRequired,
     };
-    
+
     renderAttribute = ([attributeLabel, valueLabel]) => (
-        <Fragment key={ attributeLabel }>
+        <Fragment key={attributeLabel}>
             <dt block="ProductInformation" elem="AttributeLabel">
-                { attributeLabel }
+                {attributeLabel}
             </dt>
             <dd block="ProductInformation" elem="ValueLabel">
-                <ProductAttributeValue
-                  key={ attributeLabel }
-                  attribute={ valueLabel }
-                  isFormattedAsText
-                />
+                <ProductAttributeValue key={attributeLabel} attribute={valueLabel} isFormattedAsText />
             </dd>
         </Fragment>
-        
     );
-    
+
     renderAttributes() {
         const { attributesWithValues } = this.props;
 
@@ -52,13 +47,15 @@ export class ProductInformation extends PureComponent {
         }
         return (
             <dl block="ProductInformation" elem="Attributes">
-                { Object.entries(attributesWithValues).map(this.renderAttribute) }
+                {Object.entries(attributesWithValues).map(this.renderAttribute)}
             </dl>
         );
     }
 
     renderDescription() {
-        const { product: { description: { html } = {} } } = this.props;
+        const {
+            product: { description: { html } = {} },
+        } = this.props;
 
         if (!html) {
             return null;
@@ -66,41 +63,23 @@ export class ProductInformation extends PureComponent {
 
         return (
             <div>
-                <Html content={ html } />
+                <Html content={html} />
             </div>
         );
     }
 
     renderContent() {
         const { areDetailsLoaded } = this.props;
-     //   const heading = areDetailsLoaded ? __('Product information') : '';
-        if(this.props.description){
-        return (
-            <ExpandableContent
-              // show placeholder if the details are not loaded
-              //heading={ heading }
-            //  mix={ { block: 'ProductInformation', elem: 'Content' } }
-            >
-                { this.renderDescription() }
-            </ExpandableContent>
-        );
-    }
-    return ( 
-    <ExpandableContent
-        // show placeholder if the details are not loaded
-        //heading={ heading }
-       // mix={ { block: 'ProductInformation', elem: 'Content' } }
-      >
-          { this.renderAttributes() }
-      </ExpandableContent>
-      );
+
+        if (this.props.description) {
+            return <ExpandableContent>{this.renderDescription()}</ExpandableContent>;
+        }
+        return <ExpandableContent>{this.renderAttributes()}</ExpandableContent>;
     }
     render() {
         const {
             areDetailsLoaded,
-            product: {
-                description: { html } = {}
-            }
+            product: { description: { html } = {} },
         } = this.props;
 
         if (!html && areDetailsLoaded) {
@@ -109,11 +88,11 @@ export class ProductInformation extends PureComponent {
 
         return (
             <ContentWrapper
-              label="Product information"
-              mix={ { block: 'ProductInformation' } }
-              wrapperMix={ { block: 'ProductInformation', elem: 'Wrapper' } }
+                label="Product information"
+                mix={{ block: "ProductInformation" }}
+                wrapperMix={{ block: "ProductInformation", elem: "Wrapper" }}
             >
-                { this.renderContent() }
+                {this.renderContent()}
             </ContentWrapper>
         );
     }

@@ -123,17 +123,6 @@ export class ExpandableContent extends PureComponent {
               mix={ { ...mix, elem: 'ExpandableContentButton' } }
               onClick={ this.toggleExpand }
             >
-              { /* <span
-                  block="ExpandableContent"
-                  elem="Heading"
-                  mix={ { ...mix, elem: 'ExpandableContentHeading' } }
-                >
-                    { typeof heading === 'string' ? (
-                        <TextPlaceholder content={ heading } length="medium" />
-                    ) : (
-                        heading
-                    ) }
-                    </span>*/}
                 <span
                   block="ExpandableContent"
                   elem="SubHeading"
