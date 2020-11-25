@@ -28,7 +28,20 @@
             background-color: var(--secondary-base-color);
         }
     }
-
+    &-Navbar{
+        display: flex;
+        a{
+            color: black;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+       > .Toggler-Wraper{
+           padding: 2rem;
+       }
+        >   .active {
+           background-color: var(--secondary-base-color);
+        }
+    }
     &-Wrapper {
         display: grid;
         grid-template-columns: 6fr 4fr;

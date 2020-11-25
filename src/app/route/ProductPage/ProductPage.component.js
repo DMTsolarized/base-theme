@@ -12,7 +12,6 @@
 
 import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
-
 import ContentWrapper from 'Component/ContentWrapper';
 import ProductActions from 'Component/ProductActions';
 import ProductCustomizableOptions from 'Component/ProductCustomizableOptions';
@@ -42,7 +41,13 @@ export class ProductPage extends PureComponent {
         selectedBundlePrice: PropTypes.number.isRequired,
         device: DeviceType.isRequired
     };
-
+    constructor(props){
+      super(props);
+      this.state = {
+        description: true,
+        reviews: false,
+      };
+    }
     renderProductPageContent() {
         const {
             configurableVariantIndex,
@@ -108,18 +113,38 @@ export class ProductPage extends PureComponent {
             parameters,
             areDetailsLoaded
         } = this.props;
-
         return (
             <>
                 { this.renderCustomizableOptions() }
-                <ProductInformation
+                <div className="ProductPage-Navbar">
+                  <div className="Toggler-Wraper" 
+                  style={{background: this.state.description ? "var(--secondary-base-color)" : 'white'}}>
+                <a aria-label="About"
+                onClick={() => { this.setState({description: true,reviews: false})}}>About</a>
+                </div>
+                <div className="Toggler-Wraper"
+                style={{background: !this.state.description && !this.state.reviews
+                 ? "var(--secondary-base-color)" : 'white'}}>
+                <a aria-label="Details" 
+                onClick={() => { this.setState({description: false,reviews: false})}}>Details</a>
+                </div>
+                <div className="Toggler-Wraper"
+                style={{background: this.state.reviews ? "var(--secondary-base-color)" : 'white'}}>
+                <a aria-label="Reviews"
+                onClick={() => { this.setState({description: false,reviews: true})}}>Reviews</a>
+                </div>
+                </div>
+               { 
+               !this.state.reviews && <ProductInformation
                   product={ { ...dataSource, parameters } }
                   areDetailsLoaded={ areDetailsLoaded }
-                />
-                <ProductReviews
+                  description = {this.state.description}
+               />}
+               {  
+                this.state.reviews && <ProductReviews
                   product={ dataSource }
                   areDetailsLoaded={ areDetailsLoaded }
-                />
+                />}
                 <ProductLinks
                   linkType={ RELATED }
                   title={ __('Recommended for you') }
@@ -148,7 +173,7 @@ export class ProductPage extends PureComponent {
                 >
                     { this.renderProductPageContent() }
                 </ContentWrapper>
-                { this.renderAdditionalSections() }
+                { this.renderAdditionalSections()}
             </main>
         );
     }

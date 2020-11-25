@@ -123,7 +123,7 @@ export class ExpandableContent extends PureComponent {
               mix={ { ...mix, elem: 'ExpandableContentButton' } }
               onClick={ this.toggleExpand }
             >
-                <span
+              { /* <span
                   block="ExpandableContent"
                   elem="Heading"
                   mix={ { ...mix, elem: 'ExpandableContentHeading' } }
@@ -133,7 +133,7 @@ export class ExpandableContent extends PureComponent {
                     ) : (
                         heading
                     ) }
-                </span>
+                    </span>*/}
                 <span
                   block="ExpandableContent"
                   elem="SubHeading"

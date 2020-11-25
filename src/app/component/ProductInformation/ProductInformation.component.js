@@ -27,7 +27,7 @@ export class ProductInformation extends PureComponent {
         areDetailsLoaded: PropTypes.bool.isRequired,
         attributesWithValues: AttributeType.isRequired
     };
-
+    
     renderAttribute = ([attributeLabel, valueLabel]) => (
         <Fragment key={ attributeLabel }>
             <dt block="ProductInformation" elem="AttributeLabel">
@@ -41,15 +41,15 @@ export class ProductInformation extends PureComponent {
                 />
             </dd>
         </Fragment>
+        
     );
-
+    
     renderAttributes() {
         const { attributesWithValues } = this.props;
 
         if (!Object.keys(attributesWithValues).length) {
             return null;
         }
-
         return (
             <dl block="ProductInformation" elem="Attributes">
                 { Object.entries(attributesWithValues).map(this.renderAttribute) }
@@ -73,20 +73,28 @@ export class ProductInformation extends PureComponent {
 
     renderContent() {
         const { areDetailsLoaded } = this.props;
-        const heading = areDetailsLoaded ? __('Product information') : '';
-
+     //   const heading = areDetailsLoaded ? __('Product information') : '';
+        if(this.props.description){
         return (
             <ExpandableContent
               // show placeholder if the details are not loaded
-              heading={ heading }
-              mix={ { block: 'ProductInformation', elem: 'Content' } }
+              //heading={ heading }
+            //  mix={ { block: 'ProductInformation', elem: 'Content' } }
             >
                 { this.renderDescription() }
-                { this.renderAttributes() }
             </ExpandableContent>
         );
     }
-
+    return ( 
+    <ExpandableContent
+        // show placeholder if the details are not loaded
+        //heading={ heading }
+       // mix={ { block: 'ProductInformation', elem: 'Content' } }
+      >
+          { this.renderAttributes() }
+      </ExpandableContent>
+      );
+    }
     render() {
         const {
             areDetailsLoaded,
