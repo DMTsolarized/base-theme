@@ -1,0 +1,11 @@
+.Navbar { 
+    display: flex;
+        a{
+            color: black;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+       > .Toggler-Wraper{
+           padding: 2rem;
+       }
+}

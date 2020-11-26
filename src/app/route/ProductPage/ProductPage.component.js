@@ -102,7 +102,21 @@ export class ProductPage extends PureComponent {
         return (
             <>
                 {this.renderCustomizableOptions()}
-                <Tabs dataSource={dataSource} parameters={parameters} areDetailsLoaded={areDetailsLoaded}></Tabs>
+                <Tabs tabs={["Description","Details","Reviews"]} isActive="Description">
+                <ProductInformation
+                    product={{ ...dataSource, parameters }}
+                    areDetailsLoaded={areDetailsLoaded}
+                    description={true}
+                    tabName="Description"
+                />
+                <ProductInformation
+                    product={{ ...dataSource, parameters }}
+                    areDetailsLoaded={areDetailsLoaded}
+                    description={false}
+                    tabName="Details"
+                />
+                <ProductReviews product={dataSource} areDetailsLoaded={areDetailsLoaded} tabName="Reviews"/>
+                </Tabs>
                 <ProductLinks
                     linkType={RELATED}
                     title={__("Recommended for you")}

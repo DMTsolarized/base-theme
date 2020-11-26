@@ -1,57 +1,26 @@
 import React, { useState } from "react";
-import ProductReviews from "Component/ProductReviews";
-import ProductInformation from "Component/ProductInformation";
+import './ProduccTabs.style'
 const Tabs = (props) => {
     const [pointer, setPointer] = useState({
-        description: true,
-        reviews: false,
-        isActive: "About",
+       isActive: props.isActive,
     });
-    const { dataSource, parameters, areDetailsLoaded } = props;
-    const handleClick = (e) => {
-        if (e.target.name != "Reviews") {
-            if (e.target.name == "About") setPointer({ description: true, reviews: false, isActive: "About" });
-            else setPointer({ description: false, reviews: false, isActive: "Details" });
-        } else setPointer({ description: false, reviews: true, isActive: "Reviews" });
-    };
-    return (
-        <React.Fragment>
-            <div className="ProductPage-Navbar">
-                <div
-                    name="About"
-                    className="Toggler-Wraper"
-                    style={{ background: pointer.isActive == "About" ? "var(--secondary-base-color)" : "white" }}
-                >
-                    <a aria-label="About" name="About" onClick={(e) => handleClick(e)}>
-                        About
-                    </a>
-                </div>
-                <div
-                    className="Toggler-Wraper"
-                    style={{ background: pointer.isActive == "Details" ? "var(--secondary-base-color)" : "white" }}
-                >
-                    <a aria-label="Details" name="Details" onClick={(e) => handleClick(e)}>
-                        Details
-                    </a>
-                </div>
-                <div
-                    className="Toggler-Wraper"
-                    style={{ background: pointer.isActive == "Reviews" ? "var(--secondary-base-color)" : "white" }}
-                >
-                    <a aria-label="Reviews" name="Reviews" onClick={(e) => handleClick(e)}>
-                        Reviews
-                    </a>
-                </div>
-            </div>
-            {!pointer.reviews && (
-                <ProductInformation
-                    product={{ ...dataSource, parameters }}
-                    areDetailsLoaded={areDetailsLoaded}
-                    description={pointer.description}
-                />
-            )}
-            {pointer.reviews && <ProductReviews product={dataSource} areDetailsLoaded={areDetailsLoaded} />}
-        </React.Fragment>
-    );
+  let tabContent=props.children
+   let tabs= props.tabs
+   const handleClick = e =>{
+       setPointer({isActive: e.target.name})
+   }
+   return(
+       <React.Fragment>
+       <div className="Navbar">
+           {tabs.map((tab,index) => {
+               return (
+                   <div key={index} className="Toggler-Wraper" style={{background: tab == pointer.isActive ? "var(--secondary-base-color)" : "white"}}>
+                       <a name={tab} onClick={(e) => handleClick(e)}>{tab}</a>
+                       </div>)
+           })}
+       </div>
+       {tabContent.filter(tab => tab.props.tabName==pointer.isActive)}
+       </React.Fragment>
+   )
 };
 export default Tabs;
